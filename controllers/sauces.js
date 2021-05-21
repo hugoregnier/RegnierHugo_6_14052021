@@ -1,6 +1,7 @@
 const Sauce = require('../models/Sauce')
 
 exports.createSauce = (req, res, next) => {
+    console.log(req.body)
     const sauce = new Sauce({
         ...req.body
     });
@@ -27,7 +28,7 @@ exports.getOneSauce = (req, res, next) => {
         .catch(error => res.status(404).json({ error }));
 }
 
-exports.getAllSauces = (req, res, next) => {
+exports.getAllSauce = (req, res, next) => {
     Sauce.find()
         .then(sauces => res.status(200).json({ sauces }))
         .catch(error => res.status(400).json({ error }));
