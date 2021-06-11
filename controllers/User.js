@@ -4,7 +4,7 @@ const jwt = require('jsonwebtoken');
 const User = require('../models/User');
 
 var passwordValidator = require('password-validator');
-// const MaskData = require('maskdata');
+const MaskData = require('maskdata');
 var sanitize = require('mongo-sanitize');
 
 
@@ -21,25 +21,25 @@ schema
     .has().not().spaces()                           // Should not have spaces
 
 // const maskedEmail = MaskData.maskEmail2(req.body.email, emailMask2Options);
-// const emailMask2Options = {
-//     maskWith: '*',
-//     unmaskedStartCharactersBeforeAt: 3,
-//     unmaskedEndCharactersAfterAt: 2,
-//     maskAtTheRate: false
-// }
+const emailMask2Options = {
+    maskWith: '*',
+    unmaskedStartCharactersBeforeAt: 3,
+    unmaskedEndCharactersAfterAt: 2,
+    maskAtTheRate: false
+}
 
 
 
 // fonction pour créé un utilisateur
 exports.signup = (req, res, next) => {
     const email = sanitize(req.body.email);
-    // const maskedEmail = MaskData.maskEmail2(email, emailMask2Options);
+    const maskedEmail = MaskData.maskEmail2(email, emailMask2Options);
     if (schema.validate(req.body.password)) {
         bcrypt.hash(req.body.password, 10)
             .then(hash => {
                 const user = new User({
-                    // email: maskedEmail,
-                    email: email,
+                    email: maskedEmail,
+                    // email: email,
                     password: hash
                 });
                 user.save()
@@ -55,7 +55,9 @@ exports.signup = (req, res, next) => {
 // fonction pour connecter un utilisateur existant
 exports.login = (req, res, next) => {
     const password = sanitize(req.body.password);
-    User.findOne({ email: req.body.email })
+    const email = sanitize(req.body.email);
+    const maskedEmail = MaskData.maskEmail2(email, emailMask2Options);
+    User.findOne({ email: maskedEmail })
         .then(user => {
             if (!user) {
                 return res.status(401).json({ error: 'Utilisateur non trouvé !' })
