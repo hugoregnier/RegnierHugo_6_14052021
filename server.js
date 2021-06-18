@@ -1,3 +1,4 @@
+// Notre serveur NodeJS
 const http = require('http');
 const app = require('./app');
 
@@ -12,9 +13,13 @@ const normalizePort = val => {
   }
   return false;
 };
+
+// Notre server tourne sur le port 3000 comme demandé par le front
+// normalizePort : renvoie un port valide, qu'il soit fourni sous la forme d'un numéro ou d'une chaîne
 const port = normalizePort(process.env.PORT || '3000');
 app.set('port', port);
 
+// errorHandler recherche les différentes erreurs et les gère de manière appropriée. Elle est ensuite enregistrée dans le serveur
 const errorHandler = error => {
   if (error.syscall !== 'listen') {
     throw error;
@@ -44,4 +49,5 @@ server.on('listening', () => {
   console.log('Listening on ' + bind);
 });
 
+// un écouteur d'évènements est également enregistré, consignant le port ou le canal nommé sur lequel le serveur s'exécute dans la console
 server.listen(port);

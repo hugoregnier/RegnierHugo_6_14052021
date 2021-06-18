@@ -76,7 +76,7 @@ exports.getLikesSauce = (req, res, next) => {
         $push: { usersDisliked: userId },
         $inc: { dislikes: +1 },
       })
-      .then(() => res.status(200).json({ message: 'Dislike ajouté !' }))
+      .then(() => res.status(200).json({ message: 'j\'aime pas ajouté !' }))
       .catch((error) => res.status(400).json({ error }))
   }
   if (like === 0) {
@@ -88,7 +88,7 @@ exports.getLikesSauce = (req, res, next) => {
               $pull: { usersLiked: userId },
               $inc: { likes: -1 },
             })
-            .then(() => res.status(200).json({ message: 'Like retiré !' }))
+            .then(() => res.status(200).json({ message: 'j\'aime retiré !' }))
             .catch((error) => res.status(400).json({ error }))
         }
         if (sauce.usersDisliked.includes(userId)) {
@@ -102,7 +102,7 @@ exports.getLikesSauce = (req, res, next) => {
               dislikes: -1
             },
           })
-            .then(() => res.status(200).json({ message: 'Dislike retiré !' }))
+            .then(() => res.status(200).json({ message: 'j\'aime pas retiré !' }))
             .catch((error) => res.status(400).json({ error }))
         }
       })
