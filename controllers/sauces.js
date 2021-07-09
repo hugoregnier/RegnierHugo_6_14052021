@@ -3,8 +3,10 @@ const fs = require('fs');
 
 exports.createSauce = (req, res, next) => {
   const sauceObject = JSON.parse(req.body.sauce);
+  // enlève le champs id du corps de la requête avant de copier l'objet
   delete sauceObject._id;
   const sauce = new Sauce({
+    // spread, copie les champs du corps de la requête
     ...sauceObject,
     imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`,
     likes: 0,
@@ -12,8 +14,9 @@ exports.createSauce = (req, res, next) => {
     usersLiked: [],
     usersDisliked: []
   });
+  // la methode save enregistre l'objet dans la base
   sauce.save()
-    .then(() => res.status(201).json({ message: 'Sauce enregistré !' }))
+    .then(() => res.status(201).json({ message: 'Sauce enregistrée !' }))
     .catch(error => res.status(400).json({ error }));
 };
 
@@ -24,7 +27,7 @@ exports.modifySauce = (req, res, next) => {
       imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
     } : { ...req.body };
   Sauce.updateOne({ _id: req.params.id }, { ...sauceObject, _id: req.params.id })
-    .then(() => res.status(200).json({ message: 'Sauce modifié !' }))
+    .then(() => res.status(200).json({ message: 'Sauce modifiée !' }))
     .catch(error => res.status(400).json({ error }));
 };
 

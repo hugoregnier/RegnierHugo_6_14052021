@@ -1,9 +1,12 @@
+// On va crypter le mot de passe avec bcrypt
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
 const User = require('../models/User');
 
 var passwordValidator = require('password-validator');
+
+// On masque l'email avec le package maskdata
 const MaskData = require('maskdata');
 var sanitize = require('mongo-sanitize');
 
@@ -20,7 +23,7 @@ schema
     .has().digits(2)                                // Must have at least 2 digits
     .has().not().spaces()                           // Should not have spaces
 
-// const maskedEmail = MaskData.maskEmail2(req.body.email, emailMask2Options);
+// On masque l'email avec le package maskdata
 const emailMask2Options = {
     maskWith: '*',
     unmaskedStartCharactersBeforeAt: 3,

@@ -1,4 +1,6 @@
 const mongoose = require('mongoose');
+
+// On utilise mongoose unique validator pour avoir une email de connexion UNIQUE avec la méthode .plugin
 const uniqueValidator = require('mongoose-unique-validator')
 
 const userSchema = mongoose.Schema({

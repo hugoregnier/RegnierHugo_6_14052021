@@ -10,6 +10,7 @@ const userRoutes = require('./routes/User')
 
 const app = express();
 
+// Connexion à la base de données MongoDBAtlas
 mongoose.connect('mongodb+srv://hugoregnier:hugo21@cluster0.sumrx.mongodb.net/myFirstDatabase?retryWrites=true&w=majority',
   { useNewUrlParser: true,
     useUnifiedTopology: true })
@@ -28,6 +29,7 @@ app.use((req, res, next) => {
     next();
 });
 
+// Permet de lire en format JSON
 app.use(bodyParser.json());
 
 app.use('/images', express.static(path.join(__dirname, 'images')));
