@@ -10,8 +10,13 @@ const userRoutes = require('./routes/User')
 
 const app = express();
 
-// Connexion à la base de données MongoDBAtlas
-mongoose.connect('mongodb+srv://hugoregnier:hugo21@cluster0.sumrx.mongodb.net/myFirstDatabase?retryWrites=true&w=majority',
+const helmet = require("helmet");
+
+// variables d'environnements
+require('dotenv').config();
+
+// Connexion à la base de données MongoDBAtlas avec variables d'environnements
+mongoose.connect(process.env.DB_URI,
   { useNewUrlParser: true,
     useUnifiedTopology: true })
   .then(() => console.log('Connexion à MongoDB réussie !'))
@@ -31,6 +36,9 @@ app.use((req, res, next) => {
 
 // Permet de lire en format JSON
 app.use(bodyParser.json());
+
+
+app.use(helmet());
 
 app.use('/images', express.static(path.join(__dirname, 'images')));
 

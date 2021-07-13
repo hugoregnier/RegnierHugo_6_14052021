@@ -2,9 +2,9 @@
 const http = require('http');
 const app = require('./app');
 
+// normalizePort : renvoie un port valide, qu'il soit fourni sous la forme d'un numéro ou d'une chaîne
 const normalizePort = val => {
   const port = parseInt(val, 10);
-
   if (isNaN(port)) {
     return val;
   }
@@ -15,7 +15,6 @@ const normalizePort = val => {
 };
 
 // Notre server tourne sur le port 3000 comme demandé par le front
-// normalizePort : renvoie un port valide, qu'il soit fourni sous la forme d'un numéro ou d'une chaîne
 const port = normalizePort(process.env.PORT || '3000');
 app.set('port', port);
 
